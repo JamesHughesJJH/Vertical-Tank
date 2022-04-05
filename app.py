@@ -3,26 +3,23 @@ from flask import render_template, redirect, request, url_for
 
 app = Flask(__name__)
 
-friend_list = [{"name": "Tyler Nachman" } ]
-
 @app.route('/')
 def index():
-    return render_template('index.html', pageTitle='Tyler\'s Friends', friends = friend_list)
+    return render_template('index.html', pageTitle='')
 
-@app.route('/tyler')
-def tyler():
-    return render_template('tyler.html', pageTitle='About Mike')
+@app.route('/about')
+def about():
+    return render_template('about.html', pageTitle='About Mike')
 
-@app.route('/add_friend', methods=['GET', 'POST'])
-def add_friend():
+@app.route('/estimate', methods=['GET', 'POST'])
+def estimate():
     if request.method == 'POST':
         form = request.form
-        fname = form['fname']
-        lname = form['lname']
-        friend_dict = {"name": fname + " " + lname}
-        friend_list.append(friend_dict)
-        return redirect(url_for('index'))
-    return redirect(url_for('index'))
+        radius = float(form['radius'])
+        height = float(form['height'])
+        estimate = radius + height
+        return render_template('estimate.html',quote=estimate)
+    return render_template('estimate.html')
 
 
 if __name__ == '__main__':
