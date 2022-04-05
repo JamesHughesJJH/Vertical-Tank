@@ -17,7 +17,16 @@ def estimate():
         form = request.form
         radius = float(form['radius'])
         height = float(form['height'])
-        estimate = radius + height
+        pi = 3.14
+        toparea = pi * radius**2
+        sidearea = 2*(pi*(radius*height))
+        totalarea = toparea + sidearea
+        sqfeet = totalarea/144
+        matcost = 25
+        totalmatcost = sqfeet*matcost
+        laborcost = 15
+        totallaborcost = sqfeet*laborcost
+        estimate = totallaborcost+totalmatcost
         return render_template('estimate.html',quote=estimate)
     return render_template('estimate.html')
 
